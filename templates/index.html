@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }}'s CI/CD Pipeline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --card-bg: rgba(23, 32, 54, 0.7);
+            --card-border: rgba(99, 102, 241, 0.25);
+            --accent-indigo: #6366f1;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--bg-primary) 70%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            backdrop-filter: blur(16px);
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 40px rgba(99, 102, 241, 0.15);
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            border-radius: 9999px;
+            color: #34d399;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.025em;
+            margin-bottom: 24px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 30%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            margin-bottom: 32px;
+        }
+
+        .highlight-name {
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .status-box {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 28px;
+            text-align: left;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.95rem;
+        }
+
+        .status-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .label {
+            color: var(--text-secondary);
+        }
+
+        .value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .pipeline-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+            padding: 16px;
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #cbd5e1;
+        }
+
+        .arrow {
+            color: var(--accent-indigo);
+        }
+
+        .footer {
+            margin-top: 32px;
+            font-size: 0.825rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="badge">
+            <span class="pulse-dot"></span>
+            <span>Kubernetes Pod Active</span>
+        </div>
+
+        <h1>{{ name }}'s Application</h1>
+        <p class="subtitle">{{ status }}</p>
+
+        <div class="status-box">
+            <div class="status-row">
+                <span class="label">Project Developer</span>
+                <span class="value"><span class="highlight-name">{{ name }}</span></span>
+            </div>
+            <div class="status-row">
+                <span class="label">App Version</span>
+                <span class="value">{{ version }}</span>
+            </div>
+            <div class="status-row">
+                <span class="label">Status Message</span>
+                <span class="value" style="color: #38bdf8;">{{ message }}</span>
+            </div>
+            <div class="status-row">
+                <span class="label">K8s Pod Node</span>
+                <span class="value">{{ hostname }}</span>
+            </div>
+        </div>
+
+        <div class="pipeline-flow">
+            <span class="step">🐙 Git Push</span>
+            <span class="arrow">➜</span>
+            <span class="step">⚡ GitHub Action</span>
+            <span class="arrow">➜</span>
+            <span class="step">🐳 Docker Build</span>
+            <span class="arrow">➜</span>
+            <span class="step">☸️ Minikube Deploy</span>
+        </div>
+
+        <div class="footer">
+            Automated CI/CD Demonstration • Powered by Minikube & GitHub
+        </div>
+    </div>
+</body>
+</html>
