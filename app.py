@@ -6,8 +6,8 @@ app = Flask(__name__)
 # Customizable variables for demonstration
 AUTHOR_NAME = "Anurag"
 PIPELINE_STATUS = "CI/CD Pipeline is Live & Running!"
-VERSION = "v1.0.0"
-MESSAGE = "Automated Build & Deployment to Kubernetes Successful."
+VERSION = "v2.0.0"
+MESSAGE = "Updated live via GitHub CI/CD Pipeline!"
 
 @app.route("/")
 def index():
