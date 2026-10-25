@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: flask-app:latest
+        image: anuragrj24/cloud-cicd-app:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
@@ -33,16 +33,9 @@ spec:
             port: 5000
           initialDelaySeconds: 5
           periodSeconds: 10
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: flask-service
-spec:
-  type: NodePort
-  selector:
-    app: flask-app
-  ports:
-    - port: 5000
-      targetPort: 5000
-      nodePort: 30005
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 15
