@@ -53,10 +53,10 @@ pipeline {
             steps {
                 echo 'Deploying application to Minikube Kubernetes cluster...'
                 sh '''
-                    kubectl apply -f k8s/deployment.yaml
-                    kubectl apply -f k8s/service.yaml
-                    kubectl set image deployment/flask-app flask-app=${DOCKER_IMAGE}:${BUILD_NUMBER}
-                    kubectl rollout status deployment/flask-app --timeout=90s
+                    kubectl --kubeconfig /var/jenkins_home/.kube/config apply -f k8s/deployment.yaml --validate=false
+                    kubectl --kubeconfig /var/jenkins_home/.kube/config apply -f k8s/service.yaml --validate=false
+                    kubectl --kubeconfig /var/jenkins_home/.kube/config rollout restart deployment/flask-app
+                    kubectl --kubeconfig /var/jenkins_home/.kube/config rollout status deployment/flask-app --timeout=90s
                 '''
             }
         }
@@ -65,9 +65,9 @@ pipeline {
             steps {
                 echo 'Verifying Pods, Deployment, and Service status...'
                 sh '''
-                    kubectl get pods -l app=flask-app
-                    kubectl get deployment flask-app
-                    kubectl get svc flask-service
+                    kubectl --kubeconfig /var/jenkins_home/.kube/config get pods -l app=flask-app
+                    kubectl --kubeconfig /var/jenkins_home/.kube/config get deployment flask-app
+                    kubectl --kubeconfig /var/jenkins_home/.kube/config get svc flask-service
                 '''
             }
         }
