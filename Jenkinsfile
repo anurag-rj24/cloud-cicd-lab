@@ -19,8 +19,7 @@ pipeline {
             steps {
                 echo 'Setting up environment and running tests...'
                 sh '''
-                    python3 -m pip install --upgrade pip --break-system-packages || true
-                    pip3 install -r requirements.txt --break-system-packages
+                    pip3 install -r requirements.txt --break-system-packages || true
                     python3 -m unittest test_app.py
                 '''
             }
